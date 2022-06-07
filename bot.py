@@ -36,7 +36,7 @@ args = parser.parse_args()
 
 # init storage and bot
 storage = MemoryStorage()
-API_KEY = config.api_key if args.test else config.test_api_key
+API_KEY = config.test_api_key if args.test else config.api_key
 bot = Bot(token=API_KEY)
 dp = Dispatcher(bot, storage=storage)
 
