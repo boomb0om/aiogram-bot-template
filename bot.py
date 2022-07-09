@@ -1,7 +1,5 @@
-from PIL import Image
 from io import BytesIO
 import json
-import numpy as np
 import os
 import time
 import sys
