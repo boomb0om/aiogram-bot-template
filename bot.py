@@ -86,6 +86,8 @@ async def reply_image(message: types.Message, state: FSMContext):
             "Can't recognize your attached photo"
         )
         return
+
+    logger.info(f'{message.from_user.id} sended photo')
     
     image_bytes = await download_to_bytes(file_url) 
     image_bytes.name = filename
@@ -107,6 +109,8 @@ async def reply_document(message: types.Message, state: FSMContext):
         )
         return
     
+    logger.info(f'{message.from_user.id} sended document')
+
     document_bytes = await download_to_bytes(file_url)
     document_bytes.name = filename
     # sending document using errors-safe method
@@ -140,14 +144,17 @@ async def keyboard_handler_message(message: types.Message, state: FSMContext):
 
     
 async def on_startup(dispatcher):
+    logger.note('Bot started')
     print('on_startup')
     
 async def on_shutdown(dispatcher):
+    logger.note('Bot shutting down')
     print('on_shutdown')
     
 
 if __name__ == "__main__":
-    logger = setup_logger('test_bot.log')
+    bot_name = 'test_bot' if args.test else 'bot'
+    logger = setup_logger(bot_name, logging_dir=f'logs/{bot_name}')
 
     # auth
     executor.start_polling(dp, on_startup=on_startup, on_shutdown=on_shutdown, skip_updates=True)
